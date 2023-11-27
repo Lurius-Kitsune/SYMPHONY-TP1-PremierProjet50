@@ -65,6 +65,26 @@ class PrincipalController extends AbstractController {
         $titre = "Lieu$idLieu";
         return $this->render('principal/lieu.html.twig', compact('titre', 'lieu'));
     }
-    
-    
+
+    #[Route('/modif/salaire/{id}/{salaire}', name: 'modifSalaire', requirements: ["id" => "\d+", "salaire" => "\d+"])]
+    public function modifEmployeSalaire(int $id, float $salaire, ManagerRegistry $doctrine): Response {
+        $management = $doctrine->getManager();
+        $employe = $management->getRepository(Employe::class)->find($id);
+
+        $employe->setSalaire($salaire);
+
+        $management->flush();
+        return $this->redirectToRoute("employetout", ["idEmploye" => $id]);
+    }
+
+    #[Route('/cree/employe/{nom}/{salaire}/{lieu}', name: 'creeEmploye', requirements: ["id" => "\d+", "salaire" => "\d+", "salaire" => "\d+"])]
+    public function creeEmploye(int $id, float $salaire, int $lieu, ManagerRegistry $doctrine): Response {
+        $management = $doctrine->getManager();
+        $employe = $management->getRepository(Employe::class)->find($id);
+
+        $employe->setSalaire($salaire);
+
+        $management->flush();
+        return $this->redirectToRoute("employetout", ["idEmploye" => $id]);
+    }
 }
