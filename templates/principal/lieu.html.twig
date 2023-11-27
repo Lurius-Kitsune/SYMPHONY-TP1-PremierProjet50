@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    {{ titre }}
+{% endblock %}
+{% block body %}
+    <p>Nom du lieu: {{ lieu.nom }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nom</th>
+                <th>salaire</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employe in lieu.getEmployes() %}
+                <tr>
+                    <td>{{ employe.id }}</td>
+                    <td> {{ employe.nom }}</td>
+                    <td> {{ employe.salaire }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

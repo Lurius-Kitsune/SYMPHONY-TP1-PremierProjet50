@@ -7,8 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
-class Employe
-{
+class Employe {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,31 +20,40 @@ class Employe
     #[ORM\Column(type: Types::DECIMAL, precision: 9, scale: 2)]
     private ?string $salaire = null;
 
-    public function getId(): ?int
-    {
+    #[ORM\ManyToOne(inversedBy: 'employes')]
+    #[ORM\JoinColumn(name:'idLieu',referencedColumnName:"id", nullable:false)]
+    private ?Lieu $lieu = null;
+
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
+    public function getNom(): ?string {
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
-    {
+    public function setNom(string $nom): static {
         $this->nom = $nom;
 
         return $this;
     }
 
-    public function getSalaire(): ?string
-    {
+    public function getSalaire(): ?string {
         return $this->salaire;
     }
 
-    public function setSalaire(string $salaire): static
-    {
+    public function setSalaire(string $salaire): static {
         $this->salaire = $salaire;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): static {
+        $this->lieu = $lieu;
 
         return $this;
     }
