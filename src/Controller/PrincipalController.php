@@ -78,13 +78,14 @@ class PrincipalController extends AbstractController {
     }
 
     #[Route('/cree/employe/{nom}/{salaire}/{lieu}', name: 'creeEmploye', requirements: ["id" => "\d+", "salaire" => "\d+", "salaire" => "\d+"])]
-    public function creeEmploye(int $id, float $salaire, int $lieu, ManagerRegistry $doctrine): Response {
+    public function creeEmploye(string $nom, float $salaire, int $lieu, ManagerRegistry $doctrine): Response {
+        $employe = new Employe();
+        $lieu = $doctrine->getRepository(Lieu::class)->find($lieu);
+        $employe->setNom($nom)->setLieu($lieu)->setSalaire($salaire);
         $management = $doctrine->getManager();
-        $employe = $management->getRepository(Employe::class)->find($id);
-
-        $employe->setSalaire($salaire);
-
+        $employe = $management->persist($employe);
+        
         $management->flush();
-        return $this->redirectToRoute("employetout", ["idEmploye" => $id]);
+        return $this->redirectToRoute("employes");
     }
 }
