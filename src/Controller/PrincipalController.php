@@ -84,7 +84,17 @@ class PrincipalController extends AbstractController {
         $employe->setNom($nom)->setLieu($lieu)->setSalaire($salaire);
         $management = $doctrine->getManager();
         $employe = $management->persist($employe);
-        
+
+        $management->flush();
+        return $this->redirectToRoute("employes");
+    }
+
+    #[Route('/drop/employe/{id}', name: 'dropEmploye', requirements: ["id" => "\d+"])]
+    public function dropEmploye(int $id, ManagerRegistry $doctrine): Response {
+        $management = $doctrine->getManager();
+        $employe = $management->getRepository(Employe::class)->find($id);
+        $management->remove($employe);
+
         $management->flush();
         return $this->redirectToRoute("employes");
     }
