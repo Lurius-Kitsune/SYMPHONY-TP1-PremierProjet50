@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block title %} Tuto Symphony{% endblock %}
+{% block body %}
+    <h1>Vous êtes né dans le département : {{ cp }} </h1>
+    <h2>
+        Vous êtes de sexe {{ sexe ?? 'inconnue' }}
+    </h2>
+    <h2>Nous sommes le : {{ date }}</h2>
+{% endblock %}
