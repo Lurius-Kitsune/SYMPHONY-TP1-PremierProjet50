@@ -98,4 +98,11 @@ class PrincipalController extends AbstractController {
         $management->flush();
         return $this->redirectToRoute("employes");
     }
+
+    #[Route('/stats', name: 'stats')]
+    public function afficheStats(ManagerRegistry $doctrine): Response {
+        $lieux = $doctrine->getRepository(Lieu::class)->findAll();
+        $titre = "Stats";
+        return $this->render('principal/stats.html.twig', compact('titre', 'lieux'));
+    }
 }
