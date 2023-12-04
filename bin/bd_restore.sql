@@ -22,3 +22,5 @@ update dbpremiersymfo50.employe set idLieu=1 where id=4;
 update dbpremiersymfo50.employe set idLieu=2 where id=5;
 
 select * from employe;
+
+truncate employe;
