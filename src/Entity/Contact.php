@@ -35,6 +35,9 @@ class Contact {
     #[ORM\Column(name:'datepremiercontact', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datePremierContact = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $prenom = null;
+
     public function getId(): ?int {
         return $this->id;
     }
@@ -85,6 +88,18 @@ class Contact {
 
     public function setDatePremierContact(\DateTimeInterface $datePremierContact): static {
         $this->datePremierContact = $datePremierContact;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

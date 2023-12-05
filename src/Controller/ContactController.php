@@ -10,8 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Services\GestionContact;
 use App\Entity\Contact;
+use App\Entity\Produit;
 
 #[Route('/contact', name: 'contact_')]
 class ContactController extends AbstractController {
@@ -31,6 +33,11 @@ class ContactController extends AbstractController {
                     'label' => 'Nom : ',
                     'required' => true,
                     'attr' => ['placeholder' => 'votre nom'],
+                ))
+                ->add('prenom', TextType::class, array(
+                    'label' => 'Prenom : ',
+                    'required' => true,
+                    'attr' => ['placeholder' => 'votre prenom'],
                 ))
                 ->add('mail', EmailType::class, array(
                     'label' => 'Mail : ',
@@ -54,5 +61,19 @@ class ContactController extends AbstractController {
                         ['formContact' => $form->createView(),
                             'titre' => 'Formulaire de contact',
         ]);
+    }
+
+    #[Route('/envoitous', name: 'envoitous')]
+    public function envoieTousContact(Request $request, GestionContact $gestionContact, ManagerRegistry $doctrine): Response {
+        $contacts = $gestionContact->getAllContact();
+        $produits = $doctrine->getRepository(Produit::class)->findAll();
+
+        foreach ($contacts as $contact) {
+            $gestionContact->envoiMailPromotion($contact, $produits);
+        }
+
+        $this->addFlash('notification', 'Promotions envoyé avec succées');
+
+        return $this->redirectToRoute("app_principal");
     }
 }

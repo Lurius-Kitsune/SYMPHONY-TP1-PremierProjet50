@@ -1,0 +1,53 @@
+<h3>Demande de contact</h3>
+
+
+<p>
+    Bonjour {% if(contact.getTitre() == 'M') %}
+    Monsieur
+    {% else %}
+        Madame
+        {% endif %}
+            {{ contact.getNom()|title }} {{ contact.getPrenom()|title }}!
+        </p>
+        <p>
+            Nous avons informons que nous menons actuellement une campagne de promotions sur les voyages de rêve suivants.
+        </p>
+        <h3>notre best of de voyages en promotion</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Num</th>
+                    <th>Nom du voyage</th>
+                    <th>Prix du catalogue</th>
+                    <th>Remise</th>
+                    <th>Prix remisé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits %}
+                <tr>
+                    <td>{{ produit.getId() }}</td>
+                    <td>{{ produit.getLibelle() }}</td>
+                    <td>{{ produit.getPuht() }}</td>
+                    <td>{{ produit.getRemise() }}</td>
+                    <td>{{ produit.getPuht() - (produit.getPuht() * (produit.getRemise()/100)) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <p>
+                N'hésitez pas à prendre contact avec nous afin d'obtenir des renseignements ou réserver un de ces fabuleurx voyages.
+            <p>Vous pouvez visiter notre site <a href='https://www.clubmed.fr'>en cliquant ici</a>.</p>
+            </p>
+        <p>
+            Merci pour votre confiance
+        </p>
+
+        La direction
+
+        <br/>
+        <p><a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>Voir ici</a> un petit aperçu de la croisière ?</p>
+        {# Makes an absolute URL to the /images/logo.png file #}
+        <p><img src="{{ email.image('@images/symfony.png') }}" width="150" title="cafe" alt="monimagecafe" ><p>
+
+        </p>F

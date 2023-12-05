@@ -37,5 +37,25 @@ class GestionContact {
             'contact' => $contact,
         ]);
         $this->mailer->send($email);
-    }   
+    }
+    
+    public function envoiMailPromotion(Contact $contact, array $produits) {
+        $email = (new TemplatedEmail())
+                // ->from (new Address ('contact@benoitroche.fr'))
+                ->from(new Address('no-reply@lucasfox.tech', 'No-Reply'))
+                ->to($contact->getMail())
+                ->subject('No promotion du moments')
+                ->text('Bonjour')
+                ->attachFromPath('assets/pdf/presentation.pdf', 'Présentation')
+                ->htmlTemplate('mails/mailtous.html.twig')
+                ->context([
+            'contact' => $contact,
+            'produits' => $produits,
+        ]);
+        $this->mailer->send($email);
+    }
+    
+    public function getAllContact () : array {
+        return $this->em->getRepository(Contact::class)->findAll();
+    }
 }
