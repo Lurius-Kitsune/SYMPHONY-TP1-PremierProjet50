@@ -35,7 +35,7 @@ class ContactController extends AbstractController {
                 ->add('mail', EmailType::class, array(
                     'label' => 'Mail : ',
                     'required' => true,
-                    ))
+                ))
                 ->add('tel', TextType::class, array(
                     'label' => 'Tel : ',
                     'required' => true,
@@ -45,7 +45,9 @@ class ContactController extends AbstractController {
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $gestionContact->creerContact($contact);
-            
+            $gestionContact->envoiMailContact($contact);
+            $this->addFlash('notification', 'Votre message a bien été envoyé. L\'équipe vous contactera au plus vite');
+
             return $this->redirectToRoute("app_principal");
         }
         return $this->render('contact/contact.html.twig',

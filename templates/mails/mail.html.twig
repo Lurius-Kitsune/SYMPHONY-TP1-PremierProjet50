@@ -1,0 +1,26 @@
+<h3>Demande de contact</h3>
+
+
+<p>
+    Bonjour {% if(contact.getTitre() == 'M') %}
+    Monsieur
+    {% else %}
+        Madame
+        {% endif %}
+            {{ contact.getNom()|title }}!
+        </p>
+        <p>
+            Nous avons bien recu votre demande de contact, toutes nos equies sont mobilisees pour satisfaire votre demande au plus vite.
+            <br>
+            En attendant que nous vous rappelions, vous pouvez visiter notre site <a href="https://moodle.benoitroche.fr">en cliquant ici</a>.
+        </p>
+        <p>
+            Merci pour votre confiance
+        </p>
+
+        La direction
+
+        {# Makes an absolute URL to the /images/logo.png file #}
+        <p><img src="{{ email.image('@images/symfony.png') }}" width="150" title="cafe" alt="monimagecafe" ><p>
+
+        </p>F
